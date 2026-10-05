@@ -1,0 +1,1177 @@
+/* ==========================================================================
+   ETERNAL VOWS: MARRIAGE CERTIFICATE DESIGN SYSTEM & STYLES
+   ========================================================================== */
+
+:root {
+  /* Color Palette */
+  --bg-dark: #0f0a14;
+  --bg-gradient: radial-gradient(circle at 50% 20%, #281432 0%, #15091c 45%, #09030c 100%);
+  --gold-primary: #d4af37;
+  --gold-light: #f7e7a9;
+  --gold-dark: #997a15;
+  --gold-metallic: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+  --gold-border: linear-gradient(45deg, #c5a059, #fbe8a6, #c5a059);
+  --rose-accent: #e84a7f;
+  --rose-light: #ffd1dc;
+  --parchment-bg: #fdfbf7;
+  --parchment-border: #e6dac6;
+  --ink-primary: #1e1b18;
+  --ink-secondary: #4a453f;
+  --ink-muted: #7b746d;
+  
+  /* Shadows & Glows */
+  --glow-gold: 0 0 25px rgba(212, 175, 55, 0.4);
+  --glow-rose: 0 0 30px rgba(232, 74, 127, 0.35);
+  --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.6);
+  --shadow-cert: 0 25px 60px rgba(0, 0, 0, 0.45);
+  
+  /* Transitions */
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Reset & Global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-dark);
+  background-image: var(--bg-gradient);
+  color: #f3eff5;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  padding: 20px 15px 60px;
+}
+
+/* Canvas layers for ambient hearts & confetti */
+#ambient-canvas,
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#ambient-canvas {
+  z-index: 0;
+  opacity: 0.6;
+}
+
+#confetti-canvas {
+  z-index: 999;
+}
+
+.app-container {
+  position: relative;
+  z-index: 10;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+.app-header {
+  text-align: center;
+  margin-bottom: 28px;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.rings-badge {
+  font-size: 2.4rem;
+  display: inline-block;
+  animation: ringPulse 3s infinite ease-in-out;
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6));
+}
+
+.main-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: 2px;
+  background: var(--gold-metallic);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 4px 0 6px;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #d1c4d8;
+  letter-spacing: 1px;
+}
+
+/* ==========================================================================
+   VIEW 1: REGISTRY FORM CARD
+   ========================================================================== */
+.view-card {
+  position: relative;
+  max-width: 640px;
+  margin: 0 auto;
+  border-radius: 20px;
+  background: rgba(26, 15, 34, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: var(--shadow-card), var(--glow-gold);
+  padding: 35px 32px;
+  transition: var(--transition);
+  animation: fadeInUp 0.7s ease-out;
+}
+
+.card-glow {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.5), transparent, rgba(232, 74, 127, 0.4));
+  border-radius: 22px;
+  z-index: -1;
+  opacity: 0.7;
+}
+
+.card-header-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+
+.form-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.6rem;
+  text-align: center;
+  color: #fff;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.form-desc {
+  text-align: center;
+  font-size: 0.92rem;
+  color: #bfaec7;
+  line-height: 1.5;
+  margin-bottom: 26px;
+}
+
+/* Form Controls */
+.marriage-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  position: relative;
+}
+
+.form-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+}
+
+.bride-badge {
+  background: rgba(232, 74, 127, 0.25);
+  color: #ffb3cb;
+  border: 1px solid rgba(232, 74, 127, 0.45);
+}
+
+.groom-badge {
+  background: rgba(212, 175, 55, 0.22);
+  color: #f7e2a9;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+}
+
+.date-badge, .place-badge, .vow-badge {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e5daf0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.label-hint {
+  font-size: 0.75rem;
+  color: #9f8ea8;
+  font-style: italic;
+}
+
+.label-req {
+  font-size: 0.75rem;
+  color: #ff7597;
+  font-weight: 600;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.form-control {
+  width: 100%;
+  padding: 13px 16px;
+  background: rgba(16, 7, 24, 0.7);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 12px;
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  transition: var(--transition);
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: var(--gold-light);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.35);
+  background: rgba(20, 10, 30, 0.95);
+}
+
+.editable-input {
+  font-size: 1.05rem;
+  font-weight: 500;
+  border-color: rgba(212, 175, 55, 0.5);
+}
+
+.editable-input:focus {
+  border-color: #ffd769;
+  box-shadow: 0 0 20px rgba(253, 216, 114, 0.45);
+}
+
+.locked-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.locked-input {
+  background: rgba(232, 74, 127, 0.08);
+  border-color: rgba(232, 74, 127, 0.35);
+  color: #ffd6e4;
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  cursor: default;
+  padding-right: 50px;
+}
+
+.lock-indicator {
+  position: absolute;
+  right: 14px;
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.vow-textarea {
+  resize: vertical;
+  min-height: 60px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.error-msg {
+  display: none;
+  font-size: 0.8rem;
+  color: #ff6b8b;
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+.error-msg.visible {
+  display: block;
+  animation: shake 0.4s ease;
+}
+
+/* Primary Royal Button */
+.btn-royal-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #d4af37 0%, #aa7a1e 50%, #f7e7a9 100%);
+  background-size: 200% 200%;
+  color: #241402;
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 16px 28px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.35);
+  transition: var(--transition);
+  margin-top: 8px;
+}
+
+.btn-royal-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(212, 175, 55, 0.55), var(--glow-gold);
+  background-position: right center;
+}
+
+.btn-royal-primary:active {
+  transform: translateY(1px);
+}
+
+/* ==========================================================================
+   VIEW 2: CERTIFICATE VIEW & TOOLBAR
+   ========================================================================== */
+.certificate-view {
+  animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-bottom: 50px;
+}
+
+.certificate-view.hidden,
+.view-card.hidden {
+  display: none !important;
+}
+
+/* Toolbar */
+.toolbar-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 12px 20px;
+  background: rgba(22, 12, 30, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.toolbar-left, .toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.badge-status {
+  font-size: 0.82rem;
+  color: #e2d1eb;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.5px;
+}
+
+.btn-toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  font-family: 'Outfit', sans-serif;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: var(--transition);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f0e6f7;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+
+.btn-sound {
+  background: rgba(232, 74, 127, 0.15);
+  color: #ffc2d4;
+  border-color: rgba(232, 74, 127, 0.35);
+}
+
+.btn-sound:hover {
+  background: rgba(232, 74, 127, 0.28);
+}
+
+.btn-accent {
+  background: rgba(212, 175, 55, 0.2);
+  color: #ffe699;
+  border-color: rgba(212, 175, 55, 0.5);
+}
+
+.btn-accent:hover {
+  background: rgba(212, 175, 55, 0.35);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #d4af37, #bf953f);
+  color: #1a0f02;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+}
+
+/* ==========================================================================
+   THE OFFICIAL MARRIAGE CERTIFICATE (PRINTABLE)
+   ========================================================================== */
+.cert-outer-frame {
+  background: #fdfbf7; /* Rich heavy parchment ivory */
+  background-image: 
+    radial-gradient(#e9decb 0.75px, transparent 0.75px),
+    linear-gradient(to bottom, #fffdfa 0%, #fbf6ec 50%, #f7f0df 100%);
+  background-size: 24px 24px, 100% 100%;
+  color: var(--ink-primary);
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-cert), 0 0 0 1px rgba(0, 0, 0, 0.1);
+  position: relative;
+  max-width: 1020px;
+  margin: 0 auto;
+}
+
+.cert-middle-border {
+  border: 3px double #bda061;
+  padding: 10px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.cert-inner-content {
+  border: 1px solid #d4c29d;
+  padding: 38px 45px 32px;
+  position: relative;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* Vintage Decorative Filigree Corners */
+.corner {
+  position: absolute;
+  width: 55px;
+  height: 55px;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.85;
+}
+
+/* SVG filigree ornament corners */
+.corner-top-left {
+  top: 8px;
+  left: 8px;
+  border-top: 3px solid #b38a38;
+  border-left: 3px solid #b38a38;
+}
+.corner-top-left::after {
+  content: '❧';
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  color: #b38a38;
+  font-size: 1.5rem;
+}
+
+.corner-top-right {
+  top: 8px;
+  right: 8px;
+  border-top: 3px solid #b38a38;
+  border-right: 3px solid #b38a38;
+}
+.corner-top-right::after {
+  content: '☙';
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  color: #b38a38;
+  font-size: 1.5rem;
+}
+
+.corner-bottom-left {
+  bottom: 8px;
+  left: 8px;
+  border-bottom: 3px solid #b38a38;
+  border-left: 3px solid #b38a38;
+}
+.corner-bottom-left::after {
+  content: '❧';
+  position: absolute;
+  bottom: 2px;
+  left: 4px;
+  color: #b38a38;
+  font-size: 1.5rem;
+  transform: rotate(-90deg);
+}
+
+.corner-bottom-right {
+  bottom: 8px;
+  right: 8px;
+  border-bottom: 3px solid #b38a38;
+  border-right: 3px solid #b38a38;
+}
+.corner-bottom-right::after {
+  content: '☙';
+  position: absolute;
+  bottom: 2px;
+  right: 4px;
+  color: #b38a38;
+  font-size: 1.5rem;
+  transform: rotate(90deg);
+}
+
+/* Certificate Crest */
+.cert-crest {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 12px;
+  color: #9c7827;
+}
+
+.crest-wings-left, .crest-wings-right {
+  font-size: 1.8rem;
+  opacity: 0.7;
+}
+
+.crest-center {
+  text-align: center;
+}
+
+.crest-rings {
+  font-size: 1.5rem;
+  letter-spacing: 4px;
+}
+
+.crest-sub {
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 3px;
+  color: #8c6a21;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* Certificate Header */
+.cert-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.cert-pretitle {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+  color: #8a703b;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.cert-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  color: #2b1f13;
+  letter-spacing: 2px;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.cert-subtitle {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-secondary);
+}
+
+/* Couple Grid */
+.cert-couple-grid {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr;
+  align-items: center;
+  gap: 15px;
+  margin: 25px 0 28px;
+  padding: 10px 0;
+}
+
+@media (max-width: 768px) {
+  .cert-couple-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 18px;
+  }
+}
+
+.couple-card {
+  text-align: center;
+  padding: 10px 15px;
+}
+
+.couple-title-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  letter-spacing: 3px;
+  color: #9c7b38;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.couple-name {
+  font-family: 'Alex Brush', 'Great Vibes', cursive;
+  font-size: clamp(2.4rem, 4.2vw, 3.4rem);
+  color: #2a1b14;
+  line-height: 1.2;
+  font-weight: 400;
+  word-break: break-word;
+}
+
+.bride-display-name {
+  color: #8c1d40;
+}
+
+.couple-line {
+  width: 75%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #b8984d, transparent);
+  margin: 6px auto;
+}
+
+.role-desc {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+}
+
+.couple-center-symbol {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.infinity-heart {
+  font-size: 2.2rem;
+  color: #c98835;
+  line-height: 1;
+}
+
+.and-symbol {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem;
+  color: #a87e2b;
+  font-weight: 700;
+  line-height: 1;
+  margin: 2px 0;
+}
+
+.joined-badge {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  color: #7d6537;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Statement Section */
+.cert-statement {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 30px;
+  line-height: 1.7;
+}
+
+.statement-lead {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: var(--ink-secondary);
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+.statement-emphasis {
+  font-family: 'Cinzel', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #885b1f;
+  margin-bottom: 8px;
+}
+
+.statement-body {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.02rem;
+  color: #2e2822;
+  margin-bottom: 14px;
+}
+
+.highlight-date, .highlight-place {
+  font-weight: 700;
+  color: #1a140f;
+  border-bottom: 1px dotted #9e7f3c;
+  padding: 0 4px;
+}
+
+.statement-vow {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 0.96rem;
+  color: #554d45;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 8px 18px;
+  border-left: 2px solid #d4af37;
+  border-right: 2px solid #d4af37;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+}
+
+/* Signatures Section */
+.cert-signatures {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr;
+  align-items: end;
+  gap: 20px;
+  margin-top: 32px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .cert-signatures {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+.sig-block {
+  text-align: center;
+}
+
+.sig-font {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.2rem;
+  color: #1d2545;
+  min-height: 48px;
+  line-height: 1.2;
+}
+
+.sig-bride {
+  color: #7a1d3a;
+}
+
+.sig-line {
+  width: 90%;
+  height: 1px;
+  background: #2b241d;
+  margin: 4px auto 6px;
+}
+
+.sig-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  color: #635749;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: block;
+}
+
+/* Royal Gold Wax Seal */
+.wax-seal-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.wax-seal {
+  width: 96px;
+  height: 96px;
+  background: radial-gradient(circle at 35% 35%, #ffd978, #b8860b 60%, #7d5904 100%);
+  border-radius: 50%;
+  box-shadow: 
+    0 4px 10px rgba(0, 0, 0, 0.35),
+    inset 0 2px 4px rgba(255, 255, 255, 0.5),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: sealGlow 4s infinite ease-in-out;
+}
+
+.seal-inner-circle {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(255, 240, 190, 0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff8d6;
+  text-shadow: 1px 1px 2px rgba(90, 60, 0, 0.8);
+}
+
+.seal-star {
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+.seal-initials {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
+
+.seal-text {
+  font-family: 'Cinzel', serif;
+  font-size: 0.52rem;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.seal-sub {
+  font-size: 0.45rem;
+  letter-spacing: 1.5px;
+  opacity: 0.85;
+}
+
+/* Ribbon tails */
+.seal-ribbon {
+  position: absolute;
+  width: 20px;
+  height: 38px;
+  background: linear-gradient(to bottom, #b31b3e, #820e28);
+  bottom: -22px;
+  z-index: -1;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.left-ribbon {
+  left: 24px;
+  transform: rotate(20deg);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+}
+
+.right-ribbon {
+  right: 24px;
+  transform: rotate(-20deg);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+}
+
+/* Footer Row */
+.cert-footer-row {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  align-items: end;
+  gap: 15px;
+  border-top: 1px dashed #d1c09d;
+  padding-top: 16px;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .cert-footer-row {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 14px;
+  }
+}
+
+.footer-col {
+  text-align: center;
+}
+
+.sig-font-small {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.4rem;
+  color: #3b332a;
+}
+
+.sig-line-small {
+  width: 80%;
+  height: 1px;
+  background: #736757;
+  margin: 3px auto 4px;
+}
+
+.footer-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  color: #7c7163;
+  text-transform: uppercase;
+}
+
+.footer-center {
+  text-align: center;
+}
+
+.motto-text {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 0.78rem;
+  color: #695e52;
+}
+
+/* ==========================================================================
+   CONGRATULATIONS MODAL
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-overlay.hidden {
+  display: none !important;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(8, 3, 12, 0.82);
+  backdrop-filter: blur(8px);
+}
+
+.modal-card {
+  position: relative;
+  z-index: 10;
+  background: linear-gradient(135deg, #24112c 0%, #15081b 100%);
+  border: 2px solid #d4af37;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), var(--glow-gold);
+  border-radius: 24px;
+  max-width: 520px;
+  width: 100%;
+  padding: 40px 32px 35px;
+  text-align: center;
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.confetti-cannon {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+.modal-heart-icon {
+  font-size: 3.5rem;
+  margin-bottom: 10px;
+  display: inline-block;
+  animation: heartBeat 1.4s infinite ease-in-out;
+  filter: drop-shadow(0 0 16px rgba(232, 74, 127, 0.7));
+}
+
+.modal-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.8rem, 4vw, 2.3rem);
+  font-weight: 800;
+  letter-spacing: 2px;
+  background: var(--gold-metallic);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+
+.modal-names {
+  font-family: 'Cinzel', serif;
+  font-size: 1.25rem;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.modal-and {
+  color: var(--rose-accent);
+  font-style: italic;
+  margin: 0 4px;
+}
+
+.modal-bride {
+  color: #ff9bbb;
+}
+
+.modal-text {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: #ded1e6;
+  margin-bottom: 22px;
+}
+
+.modal-seal-badge {
+  display: inline-block;
+  padding: 7px 18px;
+  border-radius: 30px;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  font-size: 0.85rem;
+  color: #fce9b3;
+  margin-bottom: 26px;
+  font-weight: 500;
+}
+
+.modal-btn {
+  width: 100%;
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.7); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(5deg); }
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.22); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.15); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+@keyframes sealGlow {
+  0%, 100% { filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35)); }
+  50% { filter: drop-shadow(0 4px 18px rgba(212, 175, 55, 0.6)); }
+}
+
+/* ==========================================================================
+   PRINT MEDIA STYLES (Single Page Perfection)
+   ========================================================================== */
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .no-print,
+  #ambient-canvas,
+  #confetti-canvas,
+  .modal-overlay,
+  .app-header {
+    display: none !important;
+  }
+
+  .app-container {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .certificate-view {
+    display: block !important;
+    margin: 0 !important;
+  }
+
+  .cert-outer-frame {
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 10mm !important;
+    background: #fff !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .cert-middle-border {
+    border-color: #997a15 !important;
+  }
+
+  .cert-inner-content {
+    background: transparent !important;
+  }
+
+  @page {
+    size: landscape;
+    margin: 8mm;
+  }
+}

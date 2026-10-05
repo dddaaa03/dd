@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate of Marriage &bull; Desiree Alombro</title>
+  <meta name="description" content="Official Certificate of Marriage featuring Desiree Alombro. Enter your name and celebrate your eternal union with love.">
+  
+  <!-- Google Fonts for Luxury & Calligraphy Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel+Decorative:wght@700&family=Cinzel:wght@500;600;700;800&family=Great+Vibes&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Romantic Background Canvas -->
+  <canvas id="ambient-canvas"></canvas>
+  <canvas id="confetti-canvas"></canvas>
+
+  <div class="app-container">
+    <!-- Top Brand Header -->
+    <header class="app-header no-print">
+      <div class="rings-badge">💍</div>
+      <h1 class="main-title">Eternal Vows Registry</h1>
+      <p class="subtitle">Official Wedding Certificate Portal &bull; Solemnized in Love</p>
+    </header>
+
+    <!-- SECTION 1: Form / Input View -->
+    <main id="registry-view" class="view-card active-view no-print">
+      <div class="card-glow"></div>
+      <div class="card-inner">
+        <div class="card-header-icon">
+          <span class="icon-ring">💍</span>
+          <span class="icon-heart">💖</span>
+          <span class="icon-ring">💍</span>
+        </div>
+        <h2 class="form-title">Enter Marriage Registration</h2>
+        <p class="form-desc">
+          To seal the holy covenant and generate your official Marriage Certificate, please enter the Groom's information.
+        </p>
+
+        <form id="marriage-form" class="marriage-form" onsubmit="event.preventDefault();">
+          <!-- Bride Field (Fixed / Pre-filled) -->
+          <div class="form-group bride-group">
+            <label class="form-label" for="bride-name">
+              <span class="role-badge bride-badge">👰 The Bride</span>
+              <span class="label-hint">Fixed & Forever Loved</span>
+            </label>
+            <div class="input-wrapper locked-wrapper">
+              <input 
+                type="text" 
+                id="bride-name" 
+                class="form-control locked-input" 
+                value="Desiree Alombro" 
+                readonly
+              >
+              <div class="lock-indicator" title="Forever Yours">🔒 ❤️</div>
+            </div>
+          </div>
+
+          <!-- Groom Field (Guy's Name Input) -->
+          <div class="form-group groom-group">
+            <label class="form-label" for="groom-name">
+              <span class="role-badge groom-badge">🤵 The Groom</span>
+              <span class="label-req">* Required</span>
+            </label>
+            <div class="input-wrapper">
+              <input 
+                type="text" 
+                id="groom-name" 
+                class="form-control editable-input" 
+                placeholder="Enter your full name here (Groom)..." 
+                required 
+                autocomplete="name"
+                autofocus
+              >
+              <div class="input-focus-glow"></div>
+            </div>
+            <span id="groom-error" class="error-msg">Palihug ibutang ang imong pangalan, Groom!</span>
+          </div>
+
+          <!-- Date Field (Auto-populated with today's date) -->
+          <div class="form-row">
+            <div class="form-group date-group">
+              <label class="form-label" for="marriage-date">
+                <span class="role-badge date-badge">📅 Date of Marriage</span>
+                <span class="label-hint">Auto-detected Today</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="date" 
+                  id="marriage-date" 
+                  class="form-control"
+                >
+              </div>
+            </div>
+
+            <!-- Place of Marriage -->
+            <div class="form-group place-group">
+              <label class="form-label" for="marriage-place">
+                <span class="role-badge place-badge">⛪ Solemnized At</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="text" 
+                  id="marriage-place" 
+                  class="form-control" 
+                  value="In Our Hearts & Before God"
+                  placeholder="e.g. Cathedral of Eternal Love"
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Sweet Vow / Commitment Note -->
+          <div class="form-group vow-group">
+            <label class="form-label" for="vow-text">
+              <span class="role-badge vow-badge">📜 Sacred Promise / Vow</span>
+              <span class="label-hint">Optional sweet message</span>
+            </label>
+            <textarea 
+              id="vow-text" 
+              class="form-control vow-textarea" 
+              rows="2" 
+              placeholder="To have and to hold, from this day forward, for better or for worse, in sickness and in health, to love and to cherish..."
+            >To have and to hold, in love and devotion, from this day forth and for all the days of our lives.</textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="button" id="btn-generate" class="btn-royal-primary">
+            <span class="btn-sparkle">✨</span>
+            <span class="btn-text">Say "I Do" & Issue Certificate</span>
+            <span class="btn-sparkle">💍</span>
+          </button>
+        </form>
+      </div>
+    </main>
+
+    <!-- SECTION 2: Certificate View (Revealed after submission) -->
+    <section id="certificate-view" class="certificate-view hidden">
+      <!-- Action Toolbar (Hidden during print) -->
+      <div class="toolbar-box no-print">
+        <div class="toolbar-left">
+          <button id="btn-edit" class="btn-toolbar btn-secondary">
+            <span>✏️</span> Edit Details
+          </button>
+        </div>
+        <div class="toolbar-center">
+          <span class="badge-status">Official Registered Document #<span id="cert-num">EA-2026-9921</span></span>
+        </div>
+        <div class="toolbar-right">
+          <button id="btn-sound" class="btn-toolbar btn-sound" title="Toggle Wedding Chimes">
+            <span>🔔</span> <span id="sound-label">Music: On</span>
+          </button>
+          <button id="btn-download" class="btn-toolbar btn-accent">
+            <span>💾</span> Download Image
+          </button>
+          <button id="btn-print" class="btn-toolbar btn-primary">
+            <span>🖨️</span> Print / Save PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- THE ROYAL CERTIFICATE (Printable Document) -->
+      <div class="cert-outer-frame" id="printable-certificate">
+        <div class="cert-middle-border">
+          <div class="cert-inner-content">
+            <!-- Vintage Filigree Corner Ornaments -->
+            <div class="corner corner-top-left"></div>
+            <div class="corner corner-top-right"></div>
+            <div class="corner corner-bottom-left"></div>
+            <div class="corner corner-bottom-right"></div>
+
+            <!-- Top Emblem -->
+            <div class="cert-crest">
+              <div class="crest-wings-left">❧</div>
+              <div class="crest-center">
+                <div class="crest-rings">💍 &hearts; 💍</div>
+                <div class="crest-sub">AMOR VINCIT OMNIA</div>
+              </div>
+              <div class="crest-wings-right">☙</div>
+            </div>
+
+            <!-- Titles -->
+            <div class="cert-header">
+              <p class="cert-pretitle">HOLY COVENANT OF MATRIMONY</p>
+              <h1 class="cert-title">Certificate of Marriage</h1>
+              <p class="cert-subtitle">This solemn record certifies that in the presence of Love, Honor, and Devotion</p>
+            </div>
+
+            <!-- Couple Names Presentation -->
+            <div class="cert-couple-grid">
+              <!-- Groom -->
+              <div class="couple-card groom-side">
+                <span class="couple-title-label">THE GROOM</span>
+                <h2 class="couple-name groom-display-name" id="display-groom-name">Groom's Name</h2>
+                <div class="couple-line"></div>
+                <span class="role-desc">Pledged in honor & lifelong fidelity</span>
+              </div>
+
+              <!-- Intertwined Center Emblem -->
+              <div class="couple-center-symbol">
+                <div class="infinity-heart">&infin;</div>
+                <span class="and-symbol">&</span>
+                <span class="joined-badge">UNITED AS ONE</span>
+              </div>
+
+              <!-- Bride (Desiree Alombro) -->
+              <div class="couple-card bride-side">
+                <span class="couple-title-label">THE BRIDE</span>
+                <h2 class="couple-name bride-display-name" id="display-bride-name">Desiree Alombro</h2>
+                <div class="couple-line"></div>
+                <span class="role-desc">Pledged in love & everlasting devotion</span>
+              </div>
+            </div>
+
+            <!-- Marriage Declaration Wording -->
+            <div class="cert-statement">
+              <p class="statement-lead">
+                Were lawfully and sacramentally united in the sacred bond of
+              </p>
+              <p class="statement-emphasis">
+                HOLY MATRIMONY
+              </p>
+              <p class="statement-body">
+                on this day, <span class="highlight-date" id="display-date-words">Monday, the 5th day of October in the year Two Thousand Twenty-Six</span>,
+                at <span class="highlight-place" id="display-place">In Our Hearts & Before God</span>.
+              </p>
+              <p class="statement-vow" id="display-vow">
+                "To have and to hold, from this day forward, for better, for worse, for richer, for poorer, in sickness and in health, to love and to cherish, till death do us part."
+              </p>
+            </div>
+
+            <!-- Signatures Section -->
+            <div class="cert-signatures">
+              <div class="sig-block">
+                <div class="sig-font sig-groom" id="sig-groom-text">Groom</div>
+                <div class="sig-line"></div>
+                <span class="sig-label">Signature of the Groom</span>
+              </div>
+
+              <!-- Center Gold Wax Seal -->
+              <div class="wax-seal-wrapper">
+                <div class="wax-seal" id="wax-seal">
+                  <div class="seal-inner-circle">
+                    <span class="seal-star">★</span>
+                    <span class="seal-initials">D & G</span>
+                    <span class="seal-text">SEALED IN LOVE</span>
+                    <span class="seal-sub">ETERNAL</span>
+                  </div>
+                  <div class="seal-ribbon left-ribbon"></div>
+                  <div class="seal-ribbon right-ribbon"></div>
+                </div>
+              </div>
+
+              <div class="sig-block">
+                <div class="sig-font sig-bride">Desiree Alombro</div>
+                <div class="sig-line"></div>
+                <span class="sig-label">Signature of the Bride</span>
+              </div>
+            </div>
+
+            <!-- Witness & Officiant Section -->
+            <div class="cert-footer-row">
+              <div class="footer-col">
+                <div class="sig-font-small">Love & Destiny</div>
+                <div class="sig-line-small"></div>
+                <span class="footer-label">Witness of the Heart</span>
+              </div>
+              <div class="footer-center">
+                <span class="motto-text">"Therefore what God has joined together, let no one separate." &bull; Mark 10:9</span>
+              </div>
+              <div class="footer-col">
+                <div class="sig-font-small">Sacred Minister of Love</div>
+                <div class="sig-line-small"></div>
+                <span class="footer-label">Officiating Witness</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- CONGRATULATIONS POPUP MODAL -->
+  <div id="congrats-modal" class="modal-overlay hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card">
+      <div class="confetti-cannon">🎉 💐 💍 💐 🎉</div>
+      <div class="modal-heart-icon">💖</div>
+      <h2 class="modal-title">CONGRATULATIONS!</h2>
+      <h3 class="modal-names">
+        <span id="congrats-groom">Groom</span> <span class="modal-and">&amp;</span> <span class="modal-bride">Desiree Alombro</span>
+      </h3>
+      <p class="modal-text">
+        You are now officially joined in holy matrimony! May your love shine bright, grow stronger with each passing day, and last for all eternity.
+      </p>
+      <div class="modal-seal-badge">
+        <span>Officially Married &bull; Officially Yours ❤️</span>
+      </div>
+      <button id="btn-view-cert" class="btn-royal-primary modal-btn">
+        <span>📜</span> View & Download Marriage Certificate
+      </button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
